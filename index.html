@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FiscaDrone 360</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css"/>
+
+<style>
+html,body{
+    margin:0;
+    padding:0;
+    height:100%;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+header{
+    background:#0B4F6C;
+    color:white;
+    padding:15px;
+    text-align:center;
+    font-size:24px;
+    font-weight:bold;
+}
+
+#map{
+    width:100%;
+    height:calc(100vh - 70px);
+}
+</style>
+
+</head>
+
+<body>
+
+<header>
+🚁 FiscaDrone 360
+</header>
+
+<div id="map"></div>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script>
+
+var map = L.map('map').setView([-53.1638,-70.9171],13);
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    maxZoom:19,
+    attribution:'© OpenStreetMap'
+}).addTo(map);
+
+map.on('click',function(e){
+
+    var tipo=prompt("Escriba:\n1 = Foto 360\n2 = Fotografías");
+
+    if(tipo==null) return;
+
+    var nombre=prompt("Nombre del punto");
+
+    if(nombre==null) return;
+
+    var enlace=prompt("Pegar enlace OneDrive");
+
+    if(enlace==null) enlace="";
+
+    var icono="📷";
+
+    if(tipo=="1") icono="🚁";
+
+    L.marker(e.latlng)
+    .addTo(map)
+    .bindPopup(
+        "<h3>"+icono+" "+nombre+"</h3>"+
+        "<a href='"+enlace+"' target='_blank'>Abrir OneDrive</a>"
+    );
+
+});
+
+</script>
+
+</body>
+</html>
